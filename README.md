@@ -1,47 +1,55 @@
 # OrbitChat 🚀
 
-**OrbitChat** is a cross-platform, real-time messaging application designed for seamless communication, smooth animations, and an intuitive user experience inspired by iPhone Messages. With integrated location sharing akin to Snapchat, OrbitChat enables users to chat, share their current whereabouts, and view friends’ locations—all while enjoying a modern and responsive interface across web and mobile devices. 🌍💬
+**OrbitChat** is a cross-platform, real-time messaging application built with a microservices architecture, leveraging gRPC and Uncle Bob's Clean Architecture principles. Designed for seamless communication, smooth animations, and an intuitive experience inspired by iPhone Messages, OrbitChat lets users chat, share their current location, and view friends’ whereabouts across web and mobile devices. 🌍💬
 
 ## Features
 
 - **Real-Time Messaging ⚡**  
-  Experience fast and efficient messaging using modern communication protocols (such as WebSockets or gRPC) for low latency and instant updates.
+  Experience fast and efficient chat through gRPC-based bi-directional streaming among microservices.
+
+- **Microservices Architecture 🏗️**  
+  The backend is split into dedicated microservices (e.g., messaging, user authentication, location) following Uncle Bob’s Clean Architecture for scalability and maintainability.
 
 - **Cross-Platform Support 📱💻**  
-  Enjoy a unified experience across web, iOS, and Android devices, ensuring smooth multi-device synchronization.
+  Enjoy a consistent experience across web, iOS, and Android devices with seamless multi-device synchronization.
 
 - **Location Sharing 📍**  
-  Integrated map functionality (using APIs like Google Maps or OpenStreetMap) allows users to share their current location and view friends’ locations in real time.
+  Integrated map functionality (using Google Maps API or OpenStreetMap) allows users to share and view real-time locations of friends.
 
 - **Smooth UI/UX ✨**  
-  Benefit from modern animations and transitions inspired by iPhone Messages, delivering an engaging and fluid user experience.
+  Modern animations and transitions inspired by iPhone Messages ensure an engaging and fluid user experience.
 
 - **User Authentication & Security 🔒**  
-  Secure user registration and login using methods like email, phone OTP, or OAuth, with robust encryption to protect user data.
+  Secure registration and login using modern auth solutions (e.g., OAuth, phone OTP) with robust encryption.
 
 - **Additional Features 🛠️**  
   - **Group Chats:** Create and manage group conversations.  
   - **Read Receipts & Typing Indicators:** Know when messages are read and when friends are typing.  
   - **Push Notifications:** Stay updated on new messages even when offline.  
-  - **Dark Mode & UI Customization:** Enjoy aesthetic choices for user comfort and personalization.  
-  - **Offline Messaging:** Ensure seamless message delivery once the user reconnects.
+  - **Dark Mode & UI Customization:** Options for enhanced user personalization.  
+  - **Offline Messaging:** Seamless message delivery upon reconnection.
 
 ## Tech Stack
 
-- **Frontend:**  
-  - Mobile: React Native  
-  - Web: Next.js or React
+### **Frontend**
+- **Mobile:** React Native
+- **Web:** Next.js or React
 
-- **Backend:**  
-  - Node.js with gRPC or WebSockets  
-  - Database: PostgreSQL or Firebase (for rapid prototyping)
+### **Backend Microservices**
+- **Language:** Node.js with TypeScript (or your preferred language)
+- **Architecture:**  
+  - **gRPC:** For inter-service communication and real-time data streaming  
+  - **Clean Architecture:** Following Uncle Bob’s principles to separate concerns (domain, use cases, interface adapters, and frameworks/drivers)
+- **Services Include:**  
+  - **Messaging Service:** Handles real-time chat via gRPC streaming  
+  - **User Authentication Service:** Manages secure user login/registration  
+  - **Location Service:** Processes location sharing and mapping
+- **Database:** PostgreSQL (or Firebase for rapid prototyping) for persistent storage
 
-- **Authentication:**  
-  - Firebase Auth, Supabase, or custom OAuth/OTP implementation
-
-- **APIs & Integrations:**  
-  - Map Integration: Google Maps API or OpenStreetMap  
-  - Animation Libraries: Framer Motion, Tailwind CSS
+### **Additional Integrations**
+- **Authentication:** Firebase Auth, Supabase, or a custom OAuth/OTP-based microservice
+- **Map Integration:** Google Maps API or OpenStreetMap
+- **Animation Libraries:** Framer Motion, Tailwind CSS
 
 ## Installation & Setup
 
@@ -52,21 +60,33 @@
    cd orbitchat
    ```
 
-2. **Install Dependencies:**
+2. **Install Dependencies for Each Service:**
 
-   For the backend:
+   For the **Messaging Microservice**:
    ```bash
-   cd backend
+   cd services/messaging
    npm install
    ```
 
-   For the web frontend:
+   For the **Authentication Microservice**:
    ```bash
-   cd ../web
+   cd ../authentication
    npm install
    ```
 
-   For mobile (React Native):
+   For the **Location Microservice**:
+   ```bash
+   cd ../location
+   npm install
+   ```
+
+   For the **Web Frontend**:
+   ```bash
+   cd ../../web
+   npm install
+   ```
+
+   For **Mobile (React Native)**:
    ```bash
    cd ../mobile
    npm install
@@ -74,14 +94,15 @@
 
 3. **Environment Setup:**
 
-   - Create a `.env` file in the backend directory and configure your environment variables (e.g., database URL, API keys for map services).
-   - Similarly, configure environment variables for the web and mobile parts as needed.
+   - Create a `.env` file in each microservice directory and configure environment variables (e.g., database URLs, API keys for map services).
+   - Similarly, set up environment variables for the web and mobile parts.
 
 4. **Run the Application:**
 
-   - **Backend:**  
+   - **Start Backend Microservices:**  
+     Launch each service (consider using Docker Compose or a process manager like PM2 for multi-service orchestration)
      ```bash
-     npm start
+     npm start  # Run in each service folder, or use your orchestration setup
      ```
    - **Web Frontend:**  
      ```bash
@@ -96,23 +117,23 @@
 ## Usage
 
 1. **Sign Up / Login 🔑:**  
-   Users can register or log in securely using the chosen authentication method.
+   Users can register or log in securely via the Authentication Service.
 
 2. **Start a Chat 💬:**  
-   Begin real-time conversations with individuals or groups.
+   Begin real-time conversations powered by the Messaging Service.
 
 3. **Share Your Location 📍:**  
-   Use the location-sharing feature to broadcast your current location and see where your friends are on the integrated map.
+   Use the Location Service to broadcast your current location and view friends on the integrated map.
 
 4. **Experience OrbitChat 🚀:**  
-   Enjoy smooth animations, interactive read receipts, and typing indicators, all designed for an engaging, modern messaging experience.
+   Enjoy an interactive experience with smooth animations, read receipts, and typing indicators—all designed for modern communication.
 
 ## Roadmap
 
 - **Enhanced Security 🔐:** Implement end-to-end encryption for all messages.
-- **Advanced Group Features 👥:** Add admin controls, file sharing, and other group functionalities.
+- **Advanced Group Features 👥:** Add admin controls, file sharing, and additional group functionalities.
 - **AI-Powered Enhancements 🤖:** Explore features like smart chat summarization and automated replies.
-- **Improved Offline Functionality 📶:** Enhance caching and message synchronization for offline scenarios.
+- **Improved Offline Functionality 📶:** Enhance caching and message synchronization during offline scenarios.
 
 ## Contributing
 
